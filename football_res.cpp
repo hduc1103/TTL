@@ -1,34 +1,35 @@
 #include <iostream>
-#include <vector>
-
+#include <algorithm>
 using namespace std;
+int mod = 1e9 + 7;
 
 int main()
 {
-    int n;
-    cin >> n;
-    long long res[n];
-    for (int i = 0; i < n; i++)
+    int t;
+    cin >> t;
+    int cnt = t;
+    int res[t];
+    while (t--)
     {
         int x, y;
         cin >> x >> y;
-        long long tu_so = 1, mau_so = 1;
+        int k = x;
+        int n = x + y;
 
-        for (int j = 1; j <= x + y; j++)
+        int C[k + 1] = {0};
+        C[0] = 1;
+
+        for (int i = 1; i <= n; ++i)
         {
-            tu_so *= j;
-            if (j <= x)
+            for (int j = min(i, k); j > 0; --j)
             {
-                mau_so *= j;
-            }
-            if (j <= y)
-            {
-                mau_so *= j;
+                C[j] = (C[j] + C[j - 1]) % mod;
             }
         }
-        res[i] = tu_so / mau_so;
+
+        res[t] = C[k];
     }
-    for (int i = 0; i < n; i++)
+    for (int i = cnt - 1; i >= 0; i--)
     {
         cout << res[i] << endl;
     }
